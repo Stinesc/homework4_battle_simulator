@@ -1,4 +1,7 @@
-from models import Soldier, Vehicle, Squad, Army
+from models.army import Army
+from models.squad import Squad
+from models.units.soldier import Soldier
+from models.units.vehicle import Vehicle
 from random import choice
 
 
@@ -18,7 +21,7 @@ class Battle:
                         soldiers_in_vehicle.append(Soldier())
                         units.append(Vehicle(soldiers_in_vehicle))
                 squads.append(Squad(units))
-            self.armies.append(Army(squads, f'Army{cur_army}'))
+            self.armies.append(Army(squads, f'Army{cur_army+1}'))
 
     def get_count_of_active_army(self):
         count = 0
