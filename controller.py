@@ -38,4 +38,4 @@ class Battle:
             for army in self.armies:
                 army.tick()
         if self.get_count_of_active_army() == 1:
-            print(f'Winner: {self.armies[0]}')
+            print(f'Winner: {self.armies[0].name}')

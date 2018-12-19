@@ -53,7 +53,7 @@ class Vehicle(Unit):
         self.operators = operators
 
     def attack_success(self):
-        return 0.5*(1+self.health/100)*gmean((operator.attack_success for operator in self.operators))
+        return 0.5*(1+self.health/100)*gmean(tuple((operator.attack_success() for operator in self.operators)))
 
     def cause_damage(self):
         if self.time_before_attack <= 0:
@@ -90,7 +90,7 @@ class Squad:
         self.units = units
 
     def attack_success(self):
-        return gmean((unit.attack_success for unit in self.units))
+        return gmean(tuple(unit.attack_success() for unit in self.units))
 
     def cause_damage(self):
         damage = 0
@@ -104,7 +104,8 @@ class Squad:
             unit.take_damage(damage_for_one_unit)
 
     def cause_attack(self, squad):
-        pass
+        if self.attack_success() > squad.attack_success():
+            squad.take_damage(self.cause_damage())
 
     def get_health_sum(self):
         health_sum = 0
@@ -133,7 +134,7 @@ class Army:
     def get_squad(self, strategy='random'):
         if strategy == 'random':
             squad = choice(self.squads)
-            while not squad.check_active():
+            while not squad.check_active() and self.check_active():
                 squad = choice(self.squads)
         elif strategy == 'weakest':
             squad = self.squads[0]
