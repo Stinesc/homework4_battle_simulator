@@ -77,9 +77,9 @@ class Vehicle(Unit):
 
     def check_active(self):
         is_active = False
-        if Unit.check_active():
+        if Unit.check_active(self):
             for operator in self.operators:
-                if operator.is_active:
+                if operator.check_active():
                     is_active = True
                     break
         return is_active
@@ -115,7 +115,7 @@ class Squad:
     def check_active(self):
         is_active = False
         for unit in self.units:
-            if unit.is_active:
+            if unit.check_active():
                 is_active = True
                 break
         return is_active
@@ -126,8 +126,9 @@ class Squad:
 
 
 class Army:
-    def __init__(self, squads):
+    def __init__(self, squads, name):
         self.squads = squads
+        self.name = name
 
     def get_squad(self, strategy='random'):
         if strategy == 'random':
@@ -154,12 +155,12 @@ class Army:
 
     def tick(self):
         for squad in self.squads:
-            squad.time_before_attack -= 1
+            squad.tick()
 
     def check_active(self):
         is_active = False
         for squad in self.squads:
-            if squad.is_active:
+            if squad.check_active():
                 is_active = True
                 break
         return is_active
