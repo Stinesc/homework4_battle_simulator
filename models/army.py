@@ -1,5 +1,6 @@
 from random import choice
 
+
 class Army:
     def __init__(self, squads, name):
         self.squads = squads
@@ -8,18 +9,16 @@ class Army:
     def get_squad(self, strategy='random'):
         if strategy == 'random':
             squad = choice(self.squads)
-            while not squad.check_active() and self.check_active():
+            while not squad.check_active():
                 squad = choice(self.squads)
         elif strategy == 'weakest':
-            squad = self.squads[0]
-            for i in range(1, len(self.squads)):
-                if squad.check_active() and self.squads[i].get_health_sum() < squad.get_health_sum():
-                    squad = self.squads[i]
+            squad = min(self.squads, key=lambda x: x.get_health_sum())
+            while not squad.check_active():
+                squad = min(self.squads, key=lambda x: x.get_health_sum())
         elif strategy == 'strongest':
-            squad = self.squads[0]
-            for i in range(1, len(self.squads)):
-                if squad.check_active() and self.squads[i].get_health_sum() > squad.get_health_sum():
-                    squad = self.squads[i]
+            squad = max(self.squads, key=lambda x: x.get_health_sum())
+            while not squad.check_active():
+                squad = max(self.squads, key=lambda x: x.get_health_sum())
         return squad
 
     def cause_attack(self, army):
