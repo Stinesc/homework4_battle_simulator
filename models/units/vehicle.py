@@ -27,9 +27,9 @@ class Vehicle(Unit):
         rand_choice_operator_ind = randint(0, len(self.operators)-1)
         for i in range(len(self.operators)):
             if i != rand_choice_operator_ind:
-                self.operators[i].health -= 0.1*damage
+                self.operators[i].take_damage(0.1*damage)
             else:
-                self.operators[i].health -= 0.2*damage
+                self.operators[i].take_damage(0.2*damage)
 
     def check_active(self):
         is_active = False

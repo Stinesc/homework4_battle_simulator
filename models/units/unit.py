@@ -1,7 +1,9 @@
+from abc import ABC, abstractmethod
 from random import randint
 
 
-class Unit:
+class Unit(ABC):
+
     def __init__(self, recharge=None, health=100):
         self.health = health
         if recharge is None:
@@ -21,3 +23,13 @@ class Unit:
 
     def cause_damage(self):
         self.time_before_attack = self.recharge
+
+    @property
+    @abstractmethod
+    def attack_success(self):
+        pass
+
+    @property
+    @abstractmethod
+    def take_damage(self, damage):
+        pass

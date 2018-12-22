@@ -22,4 +22,4 @@ class Soldier(Unit):
             return False
 
     def take_damage(self, damage):
-        self.health -= damage
+        self.health = max(self.health - damage, 0)
