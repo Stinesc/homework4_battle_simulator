@@ -12,10 +12,11 @@ class Soldier(UnitBaseMixin, Unit):
         self.experience = experience
 
     def attack_success(self):
-        return 0.5*(1+self.health/100)*randint(50+self.experience, 101)/100
+        return 0.5*(1+self.health/100)*randint(50+self.experience, 100)/100
 
     def cause_damage(self):
         if self.time_before_attack <= 0:
+            self.time_before_attack = self.recharge
             rand_0_1 = random()
             if self.attack_success() > rand_0_1:
                 damage = 0.05+self.experience/100

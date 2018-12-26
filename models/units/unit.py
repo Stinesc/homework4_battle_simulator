@@ -25,3 +25,11 @@ class Unit(ABC):
     @abstractmethod
     def take_damage(self, damage):
         pass
+
+    @classmethod
+    def register(cls, name):
+        pass
+
+    @classmethod
+    def new(cls, name):
+        pass

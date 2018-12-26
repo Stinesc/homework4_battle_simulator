@@ -15,6 +15,7 @@ class Vehicle(UnitBaseMixin, Unit):
 
     def cause_damage(self):
         if self.time_before_attack <= 0:
+            self.time_before_attack = self.recharge
             rand_0_1 = random()
             if self.attack_success() > rand_0_1:
                 damage = 0.1+sum(operator.experience/100 for operator in self.operators)

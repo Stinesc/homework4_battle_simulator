@@ -2,6 +2,7 @@ from random import randint
 
 
 class UnitBaseMixin:
+    UNIT = {}
 
     def __init__(self, recharge=None, health=100):
         self.health = health
@@ -17,8 +18,17 @@ class UnitBaseMixin:
         else:
             return False
 
+    @property
     def tick(self):
         self.time_before_attack -= 1
 
-    def cause_damage(self):
-        self.time_before_attack = self.recharge
+    @classmethod
+    def register(cls, name):
+        def dec(unit_cls):
+            cls.UNIT[name] = unit_cls
+            return unit_cls
+        return dec
+
+    @classmethod
+    def new(cls, name):
+        return cls.UNIT[name]()
