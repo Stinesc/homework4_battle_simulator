@@ -1,28 +1,20 @@
 from abc import ABC, abstractmethod
-from random import randint
 
 
 class Unit(ABC):
 
-    def __init__(self, recharge=None, health=100):
-        self.health = health
-        if recharge is None:
-            self.recharge = randint(100, 2000)
-        else:
-            self.recharge = recharge
-        self.time_before_attack = 0
-
+    @abstractmethod
     def check_active(self):
-        if self.health > 0:
-            return True
-        else:
-            return False
+        pass
 
+    @abstractmethod
     def tick(self):
-        self.time_before_attack -= 1
+        pass
 
+    @property
+    @abstractmethod
     def cause_damage(self):
-        self.time_before_attack = self.recharge
+        pass
 
     @property
     @abstractmethod

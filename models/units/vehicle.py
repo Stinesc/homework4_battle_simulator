@@ -1,11 +1,13 @@
 from .unit import Unit
+from .unit_base_mixin import UnitBaseMixin
 from scipy.stats.mstats import gmean
 from random import randint, random
 
 
-class Vehicle(Unit):
+class Vehicle(UnitBaseMixin, Unit):
+
     def __init__(self, operators, recharge=None, health=100):
-        Unit.__init__(self, recharge, health)
+        UnitBaseMixin.__init__(self, recharge, health)
         self.operators = operators
 
     def attack_success(self):

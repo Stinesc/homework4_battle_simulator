@@ -20,7 +20,7 @@ class Squad:
             unit.take_damage(damage_for_one_unit)
 
     def cause_attack(self, squad):
-        if self.attack_success() > squad.attack_success():
+        if self.attack_success() >= squad.attack_success():
             squad.take_damage(self.cause_damage())
 
     def get_health_sum(self):
