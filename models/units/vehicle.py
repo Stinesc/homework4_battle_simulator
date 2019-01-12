@@ -36,9 +36,8 @@ class Vehicle(UnitBaseMixin, Unit):
 
     def check_active(self):
         is_active = False
-        if Unit.check_active(self):
-            for operator in self.operators:
-                if operator.check_active():
-                    is_active = True
-                    break
+        for operator in self.operators:
+            if operator.check_active():
+                is_active = True
+                break
         return is_active
