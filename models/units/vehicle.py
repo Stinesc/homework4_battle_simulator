@@ -11,7 +11,7 @@ class Vehicle(UnitBaseMixin, Unit):
         self.operators = operators
 
     def attack_success(self):
-        return 0.5*(1+self.health/100)*gmean(tuple((operator.attack_success() for operator in self.operators)))
+        return 0.5*(1+self.health/100)*gmean(tuple(operator.attack_success() for operator in self.operators))
 
     def cause_damage(self):
         if self.time_before_attack <= 0:
