@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch
 from models.units.soldier import Soldier
-from models.units.unit_base_mixin import UnitBaseMixin
 
 
 class TestSoldier(unittest.TestCase):
@@ -30,8 +29,23 @@ class TestSoldier(unittest.TestCase):
         soldier = Soldier()
         self.assertEqual(soldier.attack_success(), 0.5)
 
-    @patch('models.units.unit_base_mixin.randint')
-    def test_recharge(self, mock_randint):
-        mock_randint.return_value = 100
+    @patch('models.units.soldier.random')
+    @patch('models.units.soldier.randint')
+    def test_cause_attack_not_zero(self, mock_randint, mock_random):
+        mock_randint.return_value = 50
+        mock_random.return_value = 0.4
+        soldier = Soldier(experience=100)
+        self.assertEqual(soldier.cause_damage(), 1.05)
+
+    @patch('models.units.soldier.random')
+    @patch('models.units.soldier.randint')
+    def test_cause_attack_zero(self, mock_randint, mock_random):
+        mock_randint.return_value = 50
+        mock_random.return_value = 0.6
+        soldier = Soldier(experience=100)
+        self.assertEqual(soldier.cause_damage(), 0)
+
+    def test_cause_attack_False(self):
         soldier = Soldier()
-        self.assertEqual(soldier.recharge, mock_randint.return_value)
+        soldier.time_before_attack = 100
+        self.assertFalse(soldier.cause_damage())
