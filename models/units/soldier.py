@@ -30,3 +30,9 @@ class Soldier(UnitBaseMixin, Unit):
 
     def take_damage(self, damage):
         self.health = max(self.health - damage, 0)
+
+    def check_active(self):
+        if self.health > 0:
+            return True
+        else:
+            return False
