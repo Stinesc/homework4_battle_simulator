@@ -31,7 +31,7 @@ class TestSoldier(unittest.TestCase):
 
     @patch('models.units.soldier.random')
     @patch('models.units.soldier.randint')
-    def test_cause_attack_not_zero(self, mock_randint, mock_random):
+    def test_cause_damage_not_zero(self, mock_randint, mock_random):
         mock_randint.return_value = 50
         mock_random.return_value = 0.4
         soldier = Soldier(experience=100)
@@ -39,13 +39,13 @@ class TestSoldier(unittest.TestCase):
 
     @patch('models.units.soldier.random')
     @patch('models.units.soldier.randint')
-    def test_cause_attack_zero(self, mock_randint, mock_random):
+    def test_cause_damage_zero(self, mock_randint, mock_random):
         mock_randint.return_value = 50
         mock_random.return_value = 0.6
         soldier = Soldier(experience=100)
         self.assertEqual(soldier.cause_damage(), 0)
 
-    def test_cause_attack_False(self):
+    def test_cause_damage_False(self):
         soldier = Soldier()
         soldier.time_before_attack = 100
         self.assertFalse(soldier.cause_damage())
