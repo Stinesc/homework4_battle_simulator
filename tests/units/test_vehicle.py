@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import patch
 from models.units.vehicle import Vehicle
 from models.units.soldier import Soldier
-from models.units.unit_base_mixin import UnitBaseMixin
 
 
 class TestVehicle(unittest.TestCase):

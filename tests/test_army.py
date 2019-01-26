@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from models.army import Army
 from models.squad import Squad
 from models.units.soldier import Soldier
@@ -13,3 +14,19 @@ class TestArmy(unittest.TestCase):
     def test_check_active_not_active(self):
         army = Army(name='', squads=list())
         self.assertFalse(army.check_active())
+
+    @patch('models.army.randint')
+    def test_get_squad(self, strategy='random'):
+        test_squad = Squad(units=[Soldier(health=50)])
+        army = Army(name='', squads=[test_squad, Squad(units=[Soldier()])])
+        self.assertIs(army.get_squad(), test_squad)
+
+    def test_get_squad(self, strategy='weakest'):
+        test_squad = Squad(units=[Soldier(health=50)])
+        army = Army(name='', squads=[test_squad, Squad(units=[Soldier()])])
+        self.assertIs(army.get_squad(), test_squad)
+
+    def test_get_squad(self, strategy='strongest'):
+        test_squad = Squad(units=[Soldier(health=50)])
+        army = Army(name='', squads=[test_squad, Squad(units=[Soldier(health=10)])])
+        self.assertIs(army.get_squad(), test_squad)
