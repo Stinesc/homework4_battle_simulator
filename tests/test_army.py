@@ -15,9 +15,10 @@ class TestArmy(unittest.TestCase):
         army = Army(name='', squads=list())
         self.assertFalse(army.check_active())
 
-    @patch('models.army.randint')
-    def test_get_squad(self, strategy='random'):
+    @patch('models.army.choice')
+    def test_get_squad(self, mock_choice, strategy='random'):
         test_squad = Squad(units=[Soldier(health=50)])
+        mock_choice.return_value = 0
         army = Army(name='', squads=[test_squad, Squad(units=[Soldier()])])
         self.assertIs(army.get_squad(), test_squad)
 
