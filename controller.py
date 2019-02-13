@@ -1,8 +1,15 @@
+import logging
+import logging.config
 from models.army import Army
 from models.squad import Squad
 from models.units.soldier import Soldier
 from models.units.vehicle import Vehicle
 from random import choice
+from logs.log_config import LOGGING
+
+logging.config.dictConfig(LOGGING)
+log_battle_success = logging.getLogger("battle_success")
+log_no_config_file = logging.getLogger("no_config_file")
 
 
 class Battle:
@@ -37,8 +44,9 @@ class Battle:
             for army in self.armies:
                 army_for_attack = choice(self.armies)
                 army.cause_attack(army_for_attack)
-                self.get_count_of_active_army()
+                log_battle_success.debug(f"{self.get_count_of_active_army()} are active.")
             for army in self.armies:
                 army.tick()
         if self.get_count_of_active_army() == 1:
+            log_battle_success.debug(f"{self.armies[0].name} is active an winner.")
             print(f'Winner: {self.armies[0].name}')

@@ -1,4 +1,3 @@
-import sys
 import logging
 import logging.config
 
@@ -30,35 +29,14 @@ LOGGING = {
        }
    },
    'loggers': {
-       'A': {
-           'handlers': ['null'],
-           'propagate': True,
-           'level': 'INFO',
-       },
-       'A.B': {
+       'battle_success': {
            'handlers': ['consoleError'],
-           'level': 'DEBUG',
-           'propagate': False,
-       },
-       'A.B.X': {
-           'handlers': ['console'],
-           'level': 'DEBUG',
-           'propagate': True,
-       },
-       'C': {
-           'handlers': ['console'],
            'level': 'INFO'
+       },
+       'no_config_file': {
+           'handlers': ['console'],
+           'level': 'DEBUG',
+           'propagate': True
        }
    }
 }
-
-
-logging.config.dictConfig(LOGGING)
-logA = logging.getLogger('A')
-logAB = logging.getLogger('A.B')
-logABX = logging.getLogger('A.B.X')
-logC = logging.getLogger('C')
-logA.error('A_asdasddasdasdasdas')
-logAB.error('AB_asdasddasdasdasdas')
-logABX.error('ABX_asdasddasdasdasdas')
-logC.error('C_asdasddasdasdasdas')
